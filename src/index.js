@@ -18,6 +18,7 @@ input.addEventListener("input", debounce((event) => {
     const inputValue = event.target.value.trim();
 
     if (inputValue === '') {
+        countryList.innerHTML = "";
         return;
     }
 
@@ -28,14 +29,17 @@ input.addEventListener("input", debounce((event) => {
         .then(list => {
             if (list.length > 10) {
                 Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
+
             } else if (list.length > 1) {
                 renderCountryList(list);
+
             } else if (list.length == 1) {
                 renderCountryInfo(list[0]);
             }
         });
 }, DEBOUNCE_DELAY));
 
+//------------Список-----
 function renderCountryList(list) {
     const markup = list
         .map(item => {
@@ -48,7 +52,7 @@ function renderCountryList(list) {
     countryInfo.innerHTML = "";
     countryList.innerHTML = markup;
 }
-
+//-------одна страна--------
 function renderCountryInfo(item) {
 
     const markup = `
